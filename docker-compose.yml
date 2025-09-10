@@ -1,0 +1,58 @@
+
+
+services:
+  zabbix-agent2:
+    image: zabbix/zabbix-agent2:alpine-latest
+    container_name: zabbix-agent2
+    hostname: ${ZBX_HOSTNAME}
+    environment:
+      - ZBX_SERVER_HOST=${ZBX_SERVER_HOST}
+      - ZBX_SERVER_PORT=${ZBX_SERVER_PORT}
+      - ZBX_SERVER_ACTIVE=${ZBX_SERVER_ACTIVE}
+      - ZBX_HOSTNAME=${ZBX_HOSTNAME}
+      - ZBX_LISTENPORT=${ZBX_LISTENPORT}
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run
+      - /sys:/sys
+      - /proc:/proc
+    privileged: true
+    restart: unless-stopped
+    network_mode: host
+
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: node-exporter
+    command:
+      - '--path.rootfs=/host'
+      - '--collector.filesystem.mount-points-exclude=^/(dev|proc|sys|run|var/lib/docker/.+|var/lib/containers/.+)($$|/)'
+    volumes:
+      - '/:/host:ro,rslave'
+    restart: unless-stopped
+    network_mode: host
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: cadvisor
+    privileged: true
+    devices:
+      - /dev/kmsg
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    restart: unless-stopped
+    ports:
+      - "8081:8080"
+
+  blackbox-exporter:
+    image: prom/blackbox-exporter:latest
+    container_name: blackbox-exporter
+    command: ['--config.file=/etc/blackbox_exporter/config.yml']
+    volumes:
+      - ./blackbox/blackbox.yml:/etc/blackbox_exporter/config.yml:ro
+    ports:
+      - '9115:9115'
+    restart: unless-stopped
+
