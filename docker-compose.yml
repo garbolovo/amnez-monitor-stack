@@ -55,4 +55,7 @@ services:
     ports:
       - '9115:9115'
     restart: unless-stopped
+    cap_add:
+      - NET_RAW
+      - NET_ADMIN
 
