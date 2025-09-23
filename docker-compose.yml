@@ -11,9 +11,11 @@ services:
       - ZBX_SERVER_ACTIVE=${ZBX_SERVER_ACTIVE}
       - ZBX_HOSTNAME=${ZBX_HOSTNAME}
       - ZBX_LISTENPORT=${ZBX_LISTENPORT}
+      - ZBX_DOCKER_HOST=unix:///var/run/docker.sock
     volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
       - /:/rootfs:ro
-      - /var/run:/var/run
+#      - /var/run:/var/run
       - /sys:/sys
       - /proc:/proc
     privileged: true
