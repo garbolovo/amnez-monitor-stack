@@ -7,14 +7,13 @@ services:
     hostname: ${ZBX_HOSTNAME}
     user: root
     environment:
-      - ZBX_SERVER_HOST=${ZBX_SERVER_HOST}
-      - ZBX_SERVER_PORT=${ZBX_SERVER_PORT}
-      - ZBX_SERVER_ACTIVE=${ZBX_SERVER_ACTIVE}
-      - ZBX_HOSTNAME=${ZBX_HOSTNAME}
-      - ZBX_LISTENPORT=${ZBX_LISTENPORT}
+      - ZBX_SERVER_ACTIVE=85.159.231.169:10051   # агент сам коннектится к серверу (active checks)
+      - ZBX_STARTAGENTS=0                        # отключаем пассивные агенты -> порт 10050 не нужен
       - ZBX_DOCKER_HOST=unix:///var/run/docker.sock
-      - ZBX_SERVER_ACTIVE=85.159.231.169:10051   # агент сам коннектится к серверу
-      - ZBX_STARTAGENTS=0                        # отключаем пассивные проверки (10050 не нужен)
+      - ZBX_HOSTNAME=${ZBX_HOSTNAME}
+      # необязательно, но удобно если хочешь брать hostname с системы:
+      # - ZBX_HOSTNAMEITEM=system.hostname
+      # - ZBX_HOSTMETADATA=linux_docker
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /:/rootfs:ro
