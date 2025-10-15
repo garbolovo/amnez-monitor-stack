@@ -5,15 +5,17 @@ services:
     hostname: ${ZBX_HOSTNAME}
     user: root
     environment:
-      ZBX_SERVER: "85.159.231.169"
+      ZBX_SERVER_HOST: "85.159.231.169"       # <-- правильно
+      ZBX_SERVER_PORT: "10051"
       ZBX_SERVER_ACTIVE: "85.159.231.169:10051"
       ZBX_STARTAGENTS: "0"
       ZBX_PASSIVESERVERS: ""
       ZBX_LISTENIP: "127.0.0.1"
-      ZBX_LISTENPORT: "10052"   # 🟢 поменяли порт
+      ZBX_LISTENPORT: "10052"                 # чтобы точно не конфликтовать с хостовым 10050
       ZBX_HOSTNAME: "amnezia"
       ZBX_DEBUGLEVEL: "3"
       TZ: "Europe/Moscow"
+
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /:/rootfs:ro
