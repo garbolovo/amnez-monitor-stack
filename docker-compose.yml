@@ -4,27 +4,24 @@ services:
   zabbix-agent2:
     image: zabbix/zabbix-agent2:alpine-latest
     container_name: zabbix-agent2
-    hostname: ${ZBX_HOSTNAME}
+    hostname: amnezia
     user: root
     environment:
-      - ZBX_SERVER_ACTIVE=85.159.231.169   # агент сам коннектится к серверу (active checks)
-      - ZBX_STARTAGENTS=0                        # отключаем пассивные агенты -> порт 10050 не нужен
-      - ZBX_LISTENIP=127.0.0.1
-      - ZBX_DOCKER_HOST=unix:///var/run/docker.sock
+      - ZBX_SERVER_ACTIVE=85.159.231.169:10051
+      - ZBX_STARTAGENTS=0
       - ZBX_HOSTNAME=amnezia
-      - ZBX_DEBUGLEVEL=4   
-      # необязательно, но удобно если хочешь брать hostname с системы:
-      # - ZBX_HOSTNAMEITEM=system.hostname
-      # - ZBX_HOSTMETADATA=linux_docker
+      - ZBX_DEBUGLEVEL=3
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /:/rootfs:ro
-#      - /var/run:/var/run
       - /sys:/sys
       - /proc:/proc
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
     privileged: true
     restart: unless-stopped
     network_mode: host
+
 
   node-exporter:
     image: prom/node-exporter:latest
