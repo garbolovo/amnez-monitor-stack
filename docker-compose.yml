@@ -10,6 +10,7 @@ services:
       ZBX_STARTAGENTS: "0"
       ZBX_PASSIVESERVERS: ""
       ZBX_LISTENIP: "127.0.0.1"
+      ZBX_LISTENPORT: "10052"   # 🟢 поменяли порт
       ZBX_HOSTNAME: "amnezia"
       ZBX_DEBUGLEVEL: "3"
       TZ: "Europe/Moscow"
@@ -23,8 +24,6 @@ services:
     privileged: true
     restart: unless-stopped
     network_mode: host
-
-
 
   node-exporter:
     image: prom/node-exporter:latest
