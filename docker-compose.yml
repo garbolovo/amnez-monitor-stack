@@ -1,5 +1,4 @@
 
-
 services:
   zabbix-agent2:
     image: zabbix/zabbix-agent2:alpine-latest
@@ -7,10 +6,12 @@ services:
     hostname: amnezia
     user: root
     environment:
+      - ZBX_SERVER=85.159.231.169
       - ZBX_SERVER_ACTIVE=85.159.231.169:10051
       - ZBX_STARTAGENTS=0
       - ZBX_HOSTNAME=amnezia
       - ZBX_DEBUGLEVEL=3
+      - TZ=Europe/Moscow
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /:/rootfs:ro
