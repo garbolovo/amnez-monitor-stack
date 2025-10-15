@@ -11,6 +11,9 @@ services:
       - ZBX_HOSTNAME=${ZBX_HOSTNAME}
       - ZBX_DEBUGLEVEL=3
       - TZ=Europe/Moscow
+      - ZBX_STARTAGENTS=0
+      - ZBX_PASSIVESERVERS=
+      - ZBX_LISTENPORT=0
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /:/rootfs:ro
