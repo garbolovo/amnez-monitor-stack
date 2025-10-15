@@ -9,6 +9,7 @@ services:
       ZBX_SERVER_ACTIVE: "85.159.231.169:10051"
       ZBX_STARTAGENTS: "0"
       ZBX_PASSIVESERVERS: ""
+      ZBX_LISTENIP: "127.0.0.1"
       ZBX_HOSTNAME: "amnezia"
       ZBX_DEBUGLEVEL: "3"
       TZ: "Europe/Moscow"
