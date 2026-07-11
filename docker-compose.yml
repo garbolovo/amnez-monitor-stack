@@ -34,7 +34,7 @@ services:
       - '--path.rootfs=/host'
       - '--collector.filesystem.mount-points-exclude=^/(dev|proc|sys|run|var/lib/docker/.+|var/lib/containers/.+)($$|/)'
     volumes:
-      - '/:/host:ro,rslave'
+      - '/:/host:ro'
     restart: unless-stopped
     network_mode: host
 
@@ -48,7 +48,7 @@ services:
       - /:/rootfs:ro
       - /var/run:/var/run:ro
       - /sys:/sys:ro
-      - /var/lib/docker/:/var/lib/docker:ro
+      - /var/snap/docker/common/var-lib-docker/:/var/lib/docker:ro
     restart: unless-stopped
     ports:
       - "8081:8080"
@@ -65,4 +65,3 @@ services:
     cap_add:
       - NET_RAW
       - NET_ADMIN
-
