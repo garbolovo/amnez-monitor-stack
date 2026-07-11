@@ -9,6 +9,15 @@ set -euo pipefail
 # - The deploy work tree must live under /var/snap/docker/common.
 # - The old apt docker.service/docker.socket must stay disabled, otherwise it can
 #   resurrect stale containers and conflict on ports 9100/9115/8081.
+#
+# How the deploy chain works:
+# - Local Mac repo is where files are edited and committed.
+# - GitHub remote "origin" is only a code copy; pushing there does not deploy.
+# - Server remote "amnez-monitor" points to the bare repo below.
+# - The bare repo stores Git history only; it has no working project files.
+# - Pushing master to "amnez-monitor" triggers the post-receive hook.
+# - The hook checks out master into WORK_TREE and runs Docker Compose there.
+# - WORK_TREE is just deployed files for Docker; it is not the main Git repo.
 
 GIT_DIR="/var/repo/amnez-monitoring-stack.git"
 WORK_TREE="/var/snap/docker/common/monitoring-stack"
